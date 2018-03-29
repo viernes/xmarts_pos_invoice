@@ -1,0 +1,29 @@
+<openerp>
+  <data>
+    <record id="product_template_form_view_pos_invoice" model="ir.ui.view">
+			<field name="name">product.template.pos.invoice.form.inherit</field>
+			<field name="model">product.template</field>
+			<field name="inherit_id" ref="product.product_template_only_form_view"/>
+			<field name="arch" type="xml">
+				<field name="categ_id" position="after" >
+                    <field name="use_product_general" />
+					<field name="use_product_general_siva" />
+				</field>
+			</field>
+		</record>
+
+
+		<record id="view_partner_pos_invoice_form" model="ir.ui.view">
+			<field name="name">res.partner.pos.invoice.form.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="account.view_partner_property_form"/>
+			<field name="arch" type="xml">
+				<field name="property_account_position_id" position="after" >
+                    <field name="use_partner_general" />
+				</field>
+			</field>
+		</record>
+   
+
+  </data>
+</openerp>
