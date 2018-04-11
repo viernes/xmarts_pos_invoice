@@ -74,12 +74,13 @@ class pos_order(models.Model):
             if order.invoice_id:
                 inv_ids.append(order.invoice_id.id)
                 continue
+            if not order.partner_id:
+                order.partner_id = partner
             if not order.invoice_2_general_public:
                 # print "order: %s - %s - %s" % (order.name, order.partner_id and order.partner_id.name or 'Sin Partner', order.invoice_2_general_public)
                 res = order.action_pos_order_invoice()
                 if res:
                     xinv = inv_ref.browse(res['res_id'])
-                    xinv.tax_line_ids.set_tax_cash_basis_account()
                     inv_ids.append(res['res_id'])
             else:
                 tickets_to_set_as_general_public += order
@@ -89,33 +90,24 @@ class pos_order(models.Model):
             global_origin_name = ""
             ### Busqueda del Producto para Facturacion ###
             global_product_id = tickets_to_set_as_general_public[0].search_product_global()
-            product_iva = self.env['product.template'].search([('use_product_general','=',True)])
-            product_siva = self.env['product.template'].search([('use_product_general_siva','=',True)])
-            if not product_iva:
-                raise UserError("Error!\nNo se encuntra registrado ningun producto para ventas con iva.")
-            if not product_siva:
-                raise UserError("Error!\nNo se encuntra registrado ningun producto para ventas sin iva.")
 
             ### Rertorno de la cuenta para Facturación ###
             account = global_product_id.property_account_income_id or global_product_id.categ_id.property_account_income_categ_id
 
             ticket_id_list = []
-            amount_tax = 0
-            amount_intax = 0
-            lines = []
             for ticket in tickets_to_set_as_general_public:
                 for line in ticket.lines:
-                    if len(lines) == 0:
-                        lines.append([line.tax_ids, line.price_subtotal])
-                    else:
-                        apagador = False
-                        for l in lines:
-                            if l[0].id == line.tax_ids.id:
-                                l[1] = l[1] + line.price_subtotal
-                                apagador = True
-                                break
-                        if apagador == False:
-                                lines.append([line.tax_ids, line.price_subtotal])
+                    lines_to_invoice.append((0, 0, {
+                        'product_id': line.product_id.id,
+                        'name': 'Venta del ticket: {}'.format(ticket.name),
+                        'quantity': line.qty,
+                        'account_id': account.id,
+                        'uom_id': line.product_id.uom_id.id,
+                        'invoice_line_tax_ids': [(6, 0, [x.id for x in line.tax_ids])],
+                        'price_unit': line.price_unit,
+                        'discount': line.discount,
+                        # 'sale_line_ids': [(6,0,order_line_ids)]
+                    }))
 
                 ticket.write({'invoice_2_general_public': True, 'state': 'invoiced'})
 
@@ -123,23 +115,7 @@ class pos_order(models.Model):
                 # ticket.order_line.write({'invoice_status' : 'invoiced','invoice_count': 1})
                 ticket_id_list.append(ticket.id)
 
-            for l in lines:
-                if l[0].amount == 0:
-                    product = product_siva
-                else:
-                    product = product_iva
-                product = self.env['product.product'].search([('product_tmpl_id','=',product.id)], limit=1)
-                lines_to_invoice.append((0, 0, {
-                    'product_id': product.id,
-                    'name': 'VENTA',
-                    'quantity': 1,
-                    'account_id': account.id,
-                    'uom_id': product.uom_id.id,
-                    'invoice_line_tax_ids': [(6,0,[x.id for x in l[0]])],
-                    'price_unit': l[1],
-                    'discount': 0.0,
-                    # 'sale_line_ids': [(6,0,order_line_ids)]
-                }))
+
             pay_method_ids = self.env['l10n_mx_edi.payment.method'].search([('code', '=', '01')])
             if not pay_method_ids:
                 raise UserError("Error!\nNo se encuentra el metodo de Pago 01.")

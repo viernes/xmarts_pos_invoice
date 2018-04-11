@@ -21,16 +21,3 @@ class product_uom(models.Model):
                         _("Error ! Solamente puedes tener un producto seleccionado como producto general con IVA."))
         return True
 
-    use_product_general_siva = fields.Boolean(string='Usar para Publico en General sin IVA', default=False)
-
-    @api.multi
-    @api.constrains('use_product_general_siva')
-    def _check_use_product_general_siva(self):
-        for record in self:
-            if record.use_product_general_siva:
-                res = self.search([('use_product_general_siva', '=', True)])
-                if len(res) > 1:
-                    raise UserError(
-                        _("Error ! Solamente puedes tener un producto seleccionado como producto general sin IVA."))
-        return True
-

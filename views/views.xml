@@ -7,7 +7,6 @@
 			<field name="arch" type="xml">
 				<field name="categ_id" position="after" >
                     <field name="use_product_general" />
-					<field name="use_product_general_siva" />
 				</field>
 			</field>
 		</record>
