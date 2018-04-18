@@ -11,7 +11,7 @@
     'website': "http://www.xmarts.com",
     'depends': ['base','point_of_sale',"product",
                 "sale",
-		        "account"],
+		        "account","l10n_mx_edi"],
     'data': [
         'views/pos_invoice_view.xml',
         'views/pos_order_view_10.xml',

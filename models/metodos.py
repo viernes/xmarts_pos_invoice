@@ -84,6 +84,9 @@ class pos_order(models.Model):
                     inv_ids.append(res['res_id'])
             else:
                 tickets_to_set_as_general_public += order
+                currency_id = order.pricelist_id.currency_id.id
+                company_id = order.company_id.id
+                account_id = order.partner_id.property_account_receivable_id.id
 
         if tickets_to_set_as_general_public:
             lines_to_invoice = []
@@ -96,6 +99,8 @@ class pos_order(models.Model):
 
             ticket_id_list = []
             for ticket in tickets_to_set_as_general_public:
+                pos_reference = ticket.name if ticket.name else ticket.pos_reference
+                global_origin_name += pos_reference + ","
                 for line in ticket.lines:
                     lines_to_invoice.append((0, 0, {
                         'product_id': line.product_id.id,
@@ -128,7 +133,10 @@ class pos_order(models.Model):
                 'date_invoice': date,
                 'invoice_line_ids': lines_to_invoice,
                 'origin': 'Factura Global [ ' + global_origin_name + ' ]',
-
+                'account_id': account_id,
+                'company_id': company_id,
+                'type': 'out_invoice',
+                'currency_id': currency_id,
             }
 
             invoice_id = inv_ref.create(invoice_vals)
@@ -143,6 +151,14 @@ class pos_order(models.Model):
             ## Reclasificacando Impuestos ##
             invoice_id.compute_taxes()
             #invoice_id.tax_line_ids.set_tax_cash_basis_account()
+            msj = ""
+            for order in self:
+                ref = "<a href=# data-oe-model=pos.order data-oe-id={}>{}</a>".format(order.id, order.name)
+                msj += ref+ ", "
+            message = _(
+                "Esta factura ha sido generada de les pedidos de pos: %s") % (
+                      msj)
+            invoice_id.message_post(body=message)
 
         if not inv_ids: return {}
         res = self.action_view_invoice(inv_ids)

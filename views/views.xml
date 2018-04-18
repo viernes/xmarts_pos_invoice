@@ -22,6 +22,17 @@
 				</field>
 			</field>
 		</record>
+
+	 <!-- <record id="invoice_form_view_pos_invoice" model="ir.ui.view">
+			<field name="name">invoice_form.form.inherit</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form"/>
+			<field name="arch" type="xml">
+				<button name="action_invoice_open" position="after">
+                            <button name="assign_payment_invoice_global" string="Ajustar pagos" type="object" states="open" class="oe_highlight"/>
+        		</button>
+			</field>
+		</record> -->
    
 
   </data>
