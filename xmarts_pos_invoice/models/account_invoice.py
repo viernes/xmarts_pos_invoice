@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models, _, tools
-from odoo.exceptions import UserError, RedirectWarning, ValidationError
+from openerp import api, fields, models, _, tools
+from openerp.exceptions import UserError, RedirectWarning, ValidationError
 import datetime
 
 

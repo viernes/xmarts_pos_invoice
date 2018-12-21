@@ -1,21 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<odoo>
-	<data> 
-       <record id="view_pos_order_invoice_search" model="ir.ui.view">
-            <field name="name">POS Order Invoice Search</field>
-            <field name="model">pos.order</field>
-            <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
-            <field name="arch" type="xml">
-                <field name="partner_id" position="after">
-                    <field name="invoice_id" />
-                </field>
-                <field name="user_id" position="before">
-                    <filter string="Con Factura" domain="[('invoice_id','!=',False)]"/>
-                    <filter string="No Facturado" domain="[('invoice_id','=',False)]"/>
-                    <filter string="Por Factura" domain="[]" context="{'group_by':'invoice_id'}"/>
-                </field>
-            </field>
-        </record>  
+<openerp>
+	<data>
+        
+
+	  
 		<record id="view_pos_order_invoice_form" model="ir.ui.view">
 			<field name="name">POS Order Invoice Form</field>
 			<field name="model">pos.order</field>
@@ -26,7 +14,9 @@
                             attrs="{'invisible':[('invoice_id','=',False)]}"/>
                 </field>
 			</field>
-		</record>		
+		</record>
+
+		
 		<record id="view_pos_order_invoice_tree" model="ir.ui.view">
 			<field name="name">POS Order Invoice Tree</field>
 			<field name="model">pos.order</field>
@@ -36,6 +26,23 @@
                     <field name="invoice_id" />
                 </field>
 			</field>
-		</record>		 
+		</record>		
+		
+		<record id="view_pos_order_invoice_search" model="ir.ui.view">
+			<field name="name">POS Order Invoice Search</field>
+			<field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
+			<field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="invoice_id" />
+                </field>
+                <field name="user_id" position="before">
+                    <filter string="Con Factura" domain="[('invoice_id','!=',False)]"/>
+                    <filter string="No Facturado" domain="[('invoice_id','=',False)]"/>
+                    <filter string="Por Factura" domain="[]" context="{'group_by':'invoice_id'}"/>
+                </field>
+			</field>
+		</record>        
+
   </data>
-</odoo>
+</openerp>
