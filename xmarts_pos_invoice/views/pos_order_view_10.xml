@@ -45,8 +45,8 @@
             <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
             <field name="arch" type="xml">
                 <field name="partner_id" position="after"/>
-                <field name="invoice_id" />
-                <field name="user_id" position="before">
+<!--                 <field name="invoice_id" />
+ -->                <field name="user_id" position="before">
                     <filter string="Con Factura" domain="[('invoice_id','!=',False)]"/>
                     <filter string="No Facturado" domain="[('invoice_id','=',False)]"/>
                     <filter string="Por Factura" domain="[]" context="{'group_by':'invoice_id'}"/>
