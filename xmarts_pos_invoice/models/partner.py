@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-from openerp import api, fields, models, _, tools
-from openerp.exceptions import UserError
+from odoo import api, fields, models, _, tools
+from odoo.exceptions import UserError
 
 
 class res_partner(models.Model):

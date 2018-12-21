@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-from openerp import api, fields, models, _, tools, release
-from openerp.exceptions import UserError
+from odoo import api, fields, models, _, tools, release
+from odoo.exceptions import UserError
 
 
 class pos_order(models.Model):
