@@ -2,7 +2,7 @@
 <openerp>
 	<data>  
 		<record id="view_pos_order_invoice_form" model="ir.ui.view">
-			<field name="name">POS Order Invoice Form</field>
+			<field name="name">POS.Order.Invoice.Form</field>
 			<field name="model">pos.order</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
 			<field name="arch" type="xml">
@@ -13,7 +13,7 @@
 			</field>
 		</record>		
 		<record id="view_pos_order_invoice_tree" model="ir.ui.view">
-			<field name="name">POS Order Invoice Tree</field>
+			<field name="name">POS.Order.Invoice.Tree</field>
 			<field name="model">pos.order</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
 			<field name="arch" type="xml">
@@ -40,7 +40,7 @@
 
 
 		<record id="view_pos_order_invoice_sea" model="ir.ui.view">
-			<field name="name">POS Order Invoice Search</field>
+			<field name="name">POS.Order.Invoice.Sea</field>
 			<field name="model">pos.order</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
 			<field name="arch" type="xml">
