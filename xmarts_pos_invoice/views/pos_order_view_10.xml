@@ -1,9 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <openerp>
-	<data>
-        
-
-	  
+	<data>  
 		<record id="view_pos_order_invoice_form" model="ir.ui.view">
 			<field name="name">POS Order Invoice Form</field>
 			<field name="model">pos.order</field>
@@ -14,9 +11,7 @@
                             attrs="{'invisible':[('invoice_id','=',False)]}"/>
                 </field>
 			</field>
-		</record>
-
-		
+		</record>		
 		<record id="view_pos_order_invoice_tree" model="ir.ui.view">
 			<field name="name">POS Order Invoice Tree</field>
 			<field name="model">pos.order</field>
@@ -27,7 +22,6 @@
                 </field>
 			</field>
 		</record>		
-		
 		<record id="view_pos_order_invoice_search" model="ir.ui.view">
 			<field name="name">POS Order Invoice Search</field>
 			<field name="model">pos.order</field>
@@ -43,6 +37,5 @@
                 </field>
 			</field>
 		</record>        
-
   </data>
 </openerp>
