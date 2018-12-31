@@ -1,19 +1,21 @@
 <odoo>
 	<data>
-<!-- 		<record id="view_pos_order_invoice_search" model="ir.ui.view">
+		<record id="view_pos_order_invoice_search" model="ir.ui.view">
 			<field name="name">POS Order Invoice Search</field>
 			<field name="model">pos.order</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
 			<field name="arch" type="xml">
-                <field name="partner_id" position="after">
-                    <field name="invoice_id" />
-                </field>
-                <field name="user_id" position="before">
-                    <filter string="Con Factura" domain="[('invoice_id','!=',False)]"/>
-                    <filter string="No Facturado" domain="[('invoice_id','=',False)]"/>
-                    <filter string="Por Factura" domain="[]" context="{'group_by':'invoice_id'}"/>
-                </field>
-			</field>
+                <xpath expr="//search" position="inside">
+                        <field name="partner_id" position="after">
+                            <field name="invoice_id" />
+                        </field>
+                        <field name="user_id" position="before">
+                            <filter string="Con Factura" domain="[('invoice_id','!=',False)]"/>
+                            <filter string="No Facturado" domain="[('invoice_id','=',False)]"/>
+                            <filter string="Por Factura" domain="[]" context="{'group_by':'invoice_id'}"/>
+                        </field>
+                </xpath> 
+            </field>
 		</record>  
 		
   		<record id="view_pos_order_invoice_form" model="ir.ui.view">
@@ -21,10 +23,12 @@
 			<field name="model">pos.order</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
 			<field name="arch" type="xml">
-                <field name="account_move" position="after">
-                    <field name="invoice_id" readonly="1"
-                            attrs="{'invisible':[('invoice_id','=',False)]}"/>
-                </field>
+                <xpath expr="//search" position="inside">
+                    <field name="account_move" position="after">
+                        <field name="invoice_id" readonly="1"
+                                attrs="{'invisible':[('invoice_id','=',False)]}"/>
+                    </field>
+                </xpath>
 			</field>
 		</record>
 
@@ -34,10 +38,12 @@
 			<field name="model">pos.order</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
 			<field name="arch" type="xml">
-                <field name="state" position="before">
-                    <field name="invoice_id" />
-                </field>
+                <xpath expr="//search" position="inside">
+                    <field name="state" position="before">
+                        <field name="invoice_id" />
+                    </field>
+                </xpath>
 			</field>
-		</record>	 -->	
+		</record>		
   </data>
 </odoo>
