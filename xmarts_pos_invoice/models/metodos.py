@@ -194,7 +194,7 @@ class pos_order_invoice_wizard(models.TransientModel):
                                          (general_public_partner.id, tuple(move_ids),))
         if release.major_version == "9.0":
             res = ticket_ids.action_invoice3(self.date, self.journal_id.id)
-        elif release.major_version in ("10.0", "11.0"):
+        elif release.major_version in ("10.0", "11.0", "12.0"):
             context_to_invoice = {'journal_id': self.journal_id.id}
             res = ticket_ids.with_context(context_to_invoice).action_invoice3(self.date)
         return res or {'type': 'ir.actions.act_window_close'}
