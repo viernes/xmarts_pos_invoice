@@ -130,7 +130,7 @@ class pos_order(models.Model):
                 'l10n_mx_edi_usage': 'P01',
                 'l10n_mx_edi_payment_method_id': pay_method_ids.id,
                 'journal_id': journal_id,
-                'date_invoice': date,
+                'date_invoice': str(date),
                 'invoice_line_ids': lines_to_invoice,
                 'origin': 'Factura Global [ ' + global_origin_name + ' ]',
                 'account_id': account_id,
